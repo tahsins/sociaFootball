@@ -108,7 +108,24 @@ class Main_model extends Model{
 		$rates = $this->champion_rate->get();
 		
 		if($rates){
-			$newData['rates'] = $rates;
+			/* son haftada aynı orana sahip takimlar varsa averaji buyuk olan */
+			
+			if( $data['activeWeek'] == 6 ){
+				$ayniOranSayisi = array_count_values( $rates );
+				if( max($ayniOranSayisi) > 1){
+					
+					if( $newData['pointTable'][0]['points']['av'] > $newData['pointTable'][1]['points']['av'] ){
+						$rates[0] = 100;
+						$rates[1] = 0;
+					}
+					else if( $newData['pointTable'][0]['points']['av'] < $newData['pointTable'][1]['points']['av'] ){
+						$rates[1] = 100;
+						$rates[0] = 0;
+					}
+				}
+			}
+			$newData['rates'] = $rates;	
+			/**/
 		}
 		
 		foreach( $data['weekMatches'] as $match => $score ){

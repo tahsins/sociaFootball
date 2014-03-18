@@ -39,7 +39,7 @@ class Champion_rate{
 		
 		// zirvedekilerin baslangic yuzdesini ata. Cunku diger takimlarin kayip degeri ustune eklenecek
 		foreach( array_keys($zirveEsitler) as $key )
-			$this->yuzde[$key] = $yarisanlarYuzdesi;
+			$this->yuzde[$key] = (int)$yarisanlarYuzdesi;
 			
 		for( $i = count($this->yarisanlar) -1 ; $i >= count($zirveEsitler) ; $i-- ){
 			// zirveden kaybedilen oran
@@ -48,11 +48,11 @@ class Champion_rate{
 			$kayipPuanDegeri =round( $yarisanlarYuzdesi * $kayipOran); // liderden uzaklasilan puan degeri. Lider bu oran kadar kazanirken,rakip bu kadar kaybetmis
 			
 			// liderden bu oranda kaybetti
-			$this->yuzde[$i] = $yarisanlarYuzdesi - $kayipPuanDegeri; 
+			$this->yuzde[$i] = (int)$yarisanlarYuzdesi - $kayipPuanDegeri; 
 			
 			// zirvedeki takimlara, diger takimlarin kayip orani ekle
 			for( $j = count( $zirveEsitler )-1 ; $j >= 0; $j-- ){
-				$this->yuzde[$j] += ($kayipPuanDegeri / count( $zirveEsitler ) );				
+				$this->yuzde[$j] += (int)($kayipPuanDegeri / count( $zirveEsitler ) );				
 			}
 			
 		}
